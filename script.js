@@ -15,8 +15,6 @@ async function startVideo() {
     }
 }
 
-debugger;
-if(video){
  video.addEventListener('play', () => {
     const displaySize = { width: document.getElementById('video').width, height: document.getElementById('video').height };
     faceapi.matchDimensions(document.getElementById('canvas'), displaySize);
@@ -35,9 +33,7 @@ if(video){
         }
     }, 100);
 });   
-}else{
-    console.error("Video element not found");
-}
+
 
 document.getElementById('captureBtn1').addEventListener('click', () => {
     captureImage(1);
