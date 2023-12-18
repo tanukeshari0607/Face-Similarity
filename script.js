@@ -24,7 +24,7 @@ async function startVideo() {
         const stream = await navigator.mediaDevices.getUserMedia({ video: {} });
         video.srcObject = stream;
     } catch (err) {
-        console.error(err);
+        console.error("Error accessing webcam", err);
     }
 }
 
