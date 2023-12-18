@@ -20,6 +20,7 @@ Promise.all([
 ]).then(startVideo);      
 
 async function startVideo() {
+    debugger;
     try {
         const stream = await navigator.mediaDevices.getUserMedia({ video: {} });
         video.srcObject = stream;
