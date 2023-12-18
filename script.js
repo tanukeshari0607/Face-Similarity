@@ -15,6 +15,7 @@ async function startVideo() {
     }
 }
 
+debugger;
 document.getElementById('video').addEventListener('play', () => {
     const displaySize = { width: document.getElementById('video').width, height: document.getElementById('video').height };
     faceapi.matchDimensions(document.getElementById('canvas'), displaySize);
