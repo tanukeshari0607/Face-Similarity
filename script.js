@@ -19,7 +19,6 @@ Promise.all([
     faceapi.nets.faceExpressionNet.loadFromUri('models/face_expression_model-weights_manifest.json')
 ]).then(startVideo);      
 
-document.addEventListener('DOMContentLoaded',(){
 async function startVideo() {
     try {
         const stream = await navigator.mediaDevices.getUserMedia({ video: {} });
@@ -28,8 +27,8 @@ async function startVideo() {
         console.error(err);
     }
 }
-    
-  video.addEventListener('play', () => {
+
+video.addEventListener('play', () => {
     const displaySize = { width: video.width, height: video.height };
     faceapi.matchDimensions(canvas, displaySize);
     setInterval(async () => {
@@ -47,7 +46,6 @@ async function startVideo() {
             hideMessage();
         }
     }, 100);
-});  
 });
 
 captureBtn1.addEventListener('click', () => {
