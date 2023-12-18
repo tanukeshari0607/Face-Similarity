@@ -28,7 +28,8 @@ async function startVideo() {
     }
 }
 
-video.addEventListener('play', () => {
+document.addEventListener('DOMContentLoaded',function(){
+  video.addEventListener('play', () => {
     const displaySize = { width: video.width, height: video.height };
     faceapi.matchDimensions(canvas, displaySize);
     setInterval(async () => {
@@ -46,6 +47,7 @@ video.addEventListener('play', () => {
             hideMessage();
         }
     }, 100);
+});  
 });
 
 captureBtn1.addEventListener('click', () => {
