@@ -29,7 +29,7 @@ async function startVideo() {
     }
 }
 
-$('#video').addEventListener('play', () => {
+document.getElementById('video').addEventListener('play', () => {
     const displaySize = { width: video.width, height: video.height };
     faceapi.matchDimensions(canvas, displaySize);
     setInterval(async () => {
