@@ -1,3 +1,4 @@
+const video = document.getElementById('video');
 Promise.all([
     faceapi.nets.tinyFaceDetector.loadFromUri('models/tiny_face_detector_model-weights_manifest.json'),
     faceapi.nets.faceLandmark68Net.loadFromUri('models/face_landmark_68_model-weights_manifest.json'),
@@ -6,7 +7,6 @@ Promise.all([
 ]).then(startVideo);
 
 async function startVideo() {
-    debugger;
     try {
         const stream = await navigator.mediaDevices.getUserMedia({ video: {} });
         document.getElementById('video').srcObject = stream;
@@ -16,7 +16,8 @@ async function startVideo() {
 }
 
 debugger;
-document.getElementById('video').addEventListener('play', () => {
+if(video){
+ video.addEventListener('play', () => {
     const displaySize = { width: document.getElementById('video').width, height: document.getElementById('video').height };
     faceapi.matchDimensions(document.getElementById('canvas'), displaySize);
     setInterval(async () => {
@@ -33,7 +34,10 @@ document.getElementById('video').addEventListener('play', () => {
             hideMessage();
         }
     }, 100);
-});
+});   
+}else{
+    console.error("Video element not found");
+}
 
 document.getElementById('captureBtn1').addEventListener('click', () => {
     captureImage(1);
