@@ -1,4 +1,4 @@
-const video = document.getElementById('video');
+//const video = document.getElementById('video');
 const canvas = document.getElementById('canvas');
 const captureBtn1 = document.getElementById('captureBtn1');
 const captureBtn2 = document.getElementById('captureBtn2');
@@ -29,7 +29,7 @@ async function startVideo() {
     }
 }
 
-video.addEventListener('play', () => {
+$('#video').addEventListener('play', () => {
     const displaySize = { width: video.width, height: video.height };
     faceapi.matchDimensions(canvas, displaySize);
     setInterval(async () => {
