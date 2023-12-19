@@ -1,4 +1,5 @@
 const video = document.getElementById('video');
+
 Promise.all([
     faceapi.nets.tinyFaceDetector.loadFromUri('models/tiny_face_detector_model-weights_manifest.json'),
     faceapi.nets.faceLandmark68Net.loadFromUri('models/face_landmark_68_model-weights_manifest.json'),
@@ -8,16 +9,50 @@ Promise.all([
 
 async function startVideo() {
     try {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: {} });
+        const stream = await navigator.mediaDevices.getUserMedia({
+             video: {
+                facingMode: 'environment'          //'environment' for back camera, 'user' for front camera
+             } });
         document.getElementById('video').srcObject = stream;
     } catch (err) {
         console.error("Error accessing webcam", err);
     }
 }
+// Toggle between front and back cameras
+async function toggleCamera() {
+    const videoElement = document.getElementById('video');
+    const stream = videoElement.srcObject;
+    if (!stream) return;
 
- video.addEventListener('play', () => {
+    const tracks = stream.getTracks();
+    for (const track of tracks) {
+        track.stop();
+    }
+
+    const currentFacingMode = videoElement.srcObject.getVideoTracks()[0].getSettings().facingMode;
+    const newFacingMode = currentFacingMode === 'user' ? 'environment' : 'user';
+
+    try {
+        const newStream = await navigator.mediaDevices.getUserMedia({
+            video: {
+                facingMode: newFacingMode
+            }
+        });
+
+        videoElement.srcObject = newStream;
+    } catch (error) {
+        console.error('Error toggling camera:', error);
+    }
+}
+
+const flipCameraBtn = document.getElementById('flipCameraBtn');
+if (flipCameraBtn) {
+    flipCameraBtn.addEventListener('click', toggleCamera);
+}
+video.addEventListener('play', () => {
     const displaySize = { width: document.getElementById('video').width, height: document.getElementById('video').height };
     faceapi.matchDimensions(document.getElementById('canvas'), displaySize);
+    
     setInterval(async () => {
         const detections = await faceapi.detectAllFaces(document.getElementById('video'), new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptors().withFaceExpressions();
         const resizedDetections = faceapi.resizeResults(detections, displaySize);
@@ -28,11 +63,12 @@ async function startVideo() {
         isFaceDetected = detections.length > 0;
         if (!isFaceDetected) {
             showMessage("No Face Detected");
+            isLivenessDetected = false;
         } else {
-            hideMessage();
+          hideMessage();
         }
     }, 100);
-});   
+});
 
 
 document.getElementById('captureBtn1').addEventListener('click', () => {
@@ -47,6 +83,9 @@ let capturedDetails;
 let isFaceDetected = false;
 let descriptors = { desc1: null, desc2: null };
 const threshold = 0.4;
+let isLivenessDetected = false;
+let consecutiveFrames = 0;
+const maxConsecutiveFrames = 30;
 
 function captureImage(imageNumber) {
     const captureCanvas = document.createElement('canvas');
@@ -67,6 +106,7 @@ function captureImage(imageNumber) {
                 capturedDetails = detections;
                 descriptors[`desc${imageNumber}`] = detections[0]?.descriptor; // Assuming there is only one face in the captured image
                 updateResult();
+
             } else {
                 console.log(document.getElementById('result').textContent = `Not able to detect face in Image ${imageNumber}`);
             }
@@ -106,3 +146,49 @@ function showMessage(msg) {
 function hideMessage() {
     document.getElementById('message').style.visibility = 'hidden';
 }
+
+//Below code can be used for uploaded images
+
+        // uploadBtn.addEventListener('click', () => {
+        //     const uploadedImage = fileInput.files[0];
+        //     if (uploadedImage) {
+        //         processUploadedImage(uploadedImage);
+        //     } else {
+        //         console.error('Please select an image to upload.');
+        //     }
+        // });
+
+        // function processUploadedImage(uploadedImage) {
+        //     const reader = new FileReader();
+        //     reader.onload = function (e) {
+        //         const img = new Image();
+        //         img.src = e.target.result;
+
+        //         img.onload = function () {
+        //             const uploadCanvas = document.createElement('canvas');
+        //             uploadCanvas.width = img.width;
+        //             uploadCanvas.height = img.height;
+        //             const ctx = uploadCanvas.getContext('2d');
+        //             ctx.drawImage(img, 0, 0, uploadCanvas.width, uploadCanvas.height);
+        //             console.log("Image Resolution" + uploadCanvas.width + "x" + uploadCanvas.height);
+        //             if (uploadCanvas.width >= 400 && uploadCanvas.height >= 400) {
+        //                 deferred.resolve(true);
+        //             } else {
+        //                 alert("The image resolution is too low.");
+        //                 deferred.resolve(false);
+        //             }
+        //             debugger;
+        //             faceapi.detectAllFaces(uploadCanvas, new faceapi.TinyFaceDetectorOptions())
+        //                 .withFaceLandmarks()
+        //                 .withFaceDescriptors()
+        //                 .withFaceExpressions()
+        //                 .then(detections => {
+        //                     console.log('Uploaded Image Details:', detections);
+        //                     descriptors.desc2 = detections[0]?.descriptor; // Assuming there is only one face in the uploaded image
+        //                     updateResult();
+        //                 });
+        //         };
+        //     };
+
+        //     reader.readAsDataURL(uploadedImage);
+        // }
