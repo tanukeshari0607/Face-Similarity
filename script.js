@@ -11,7 +11,7 @@ async function startVideo() {
     try {
         const stream = await navigator.mediaDevices.getUserMedia({
              video: {
-                facingMode: 'user'          //'environment' for back camera, 'user' for front camera
+                facingMode: 'environment'          //'environment' for back camera, 'user' for front camera
              } });
         document.getElementById('video').srcObject = stream;
     } catch (err) {
