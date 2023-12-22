@@ -12,7 +12,7 @@ async function startVideo() {
     try {
         const stream = await navigator.mediaDevices.getUserMedia({
              video: {
-                facingMode: 'environment'          //'environment' for back camera, 'user' for front camera
+                facingMode: 'user'          //'environment' for back camera, 'user' for front camera
              } });
         document.getElementById('video').srcObject = stream;
     } catch (err) {
@@ -83,7 +83,7 @@ document.getElementById('captureBtn2').addEventListener('click', () => {
 let capturedDetails;
 let isFaceDetected = false;
 let descriptors = { desc1: null, desc2: null };
-const threshold = 0.6;
+const threshold = 0.4;
 let isLivenessDetected = false;
 let consecutiveFrames = 0;
 const maxConsecutiveFrames = 30;
@@ -118,6 +118,7 @@ function captureImage(imageNumber) {
         });
 }
 
+
 function updateResult() {
     if (descriptors.desc1 && descriptors.desc2) {
         const distance = faceapi.utils.round(faceapi.euclideanDistance(descriptors.desc1, descriptors.desc2));
@@ -151,4 +152,3 @@ function showMessage(msg) {
 function hideMessage() {
     document.getElementById('message').style.visibility = 'hidden';
 }
-
