@@ -4,7 +4,8 @@ Promise.all([
     faceapi.nets.tinyFaceDetector.loadFromUri('models/tiny_face_detector_model-weights_manifest.json'),
     faceapi.nets.faceLandmark68Net.loadFromUri('models/face_landmark_68_model-weights_manifest.json'),
     faceapi.nets.faceRecognitionNet.loadFromUri('models/face_recognition_model-weights_manifest.json'),
-    faceapi.nets.faceExpressionNet.loadFromUri('models/face_expression_model-weights_manifest.json')
+    faceapi.nets.faceExpressionNet.loadFromUri('models/face_expression_model-weights_manifest.json'),
+    faceapi.nets.ssdMobilenetv1.loadFromUri('models/ssd_mobilenetv1_model-weights_manifest.json')
 ]).then(startVideo);
 
 async function startVideo() {
@@ -54,7 +55,7 @@ video.addEventListener('play', () => {
     faceapi.matchDimensions(document.getElementById('canvas'), displaySize);
     
     setInterval(async () => {
-        const detections = await faceapi.detectAllFaces(document.getElementById('video'), new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptors().withFaceExpressions();
+        const detections = await faceapi.detectAllFaces(document.getElementById('video'), new faceapi.SsdMobilenetv1Options()).withFaceLandmarks().withFaceDescriptors().withFaceExpressions();
         const resizedDetections = faceapi.resizeResults(detections, displaySize);
         document.getElementById('canvas').getContext('2d').clearRect(0, 0, document.getElementById('canvas').width, document.getElementById('canvas').height);
 
@@ -94,7 +95,7 @@ function captureImage(imageNumber) {
     const ctx = captureCanvas.getContext('2d');
     ctx.drawImage(document.getElementById('video'), 0, 0, captureCanvas.width, captureCanvas.height);
 
-    faceapi.detectAllFaces(captureCanvas, new faceapi.TinyFaceDetectorOptions())
+    faceapi.detectAllFaces(captureCanvas, new faceapi.SsdMobilenetv1Options())
         .withFaceLandmarks()
         .withFaceDescriptors()
         .withFaceExpressions()
