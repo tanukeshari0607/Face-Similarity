@@ -64,7 +64,6 @@ video.addEventListener('play', () => {
         isFaceDetected = detections.length > 0;
         if (!isFaceDetected) {
             showMessage("No Face Detected");
-            isLivenessDetected = false;
         } else {
           hideMessage();
         }
@@ -84,9 +83,6 @@ let capturedDetails;
 let isFaceDetected = false;
 let descriptors = { desc1: null, desc2: null };
 const threshold = 0.6;
-let isLivenessDetected = false;
-let consecutiveFrames = 0;
-const maxConsecutiveFrames = 30;
 
 function captureImage(imageNumber) {
     const captureCanvas = document.createElement('canvas');
