@@ -100,16 +100,20 @@ function captureImage(imageNumber) {
         .withFaceDescriptors()
         .withFaceExpressions()
         .then(detections => {
+            const defaultMsgElement = document.getElementById(`defaultMsg${imageNumber}`);
+            const resultElement = document.getElementById('result');
+
             if (detections.length > 1) {
-                console.log(document.getElementById('result').textContent = `Multiple faces detected in Image ${imageNumber}`);
+                resultElement.textContent = `Multiple faces detected in Image ${imageNumber}`;
             } else if (detections.length === 1 && detections[0].landmarks) {
                 console.log(`Captured Image${imageNumber} Details:`, detections);
                 capturedDetails = detections;
                 descriptors[`desc${imageNumber}`] = detections[0]?.descriptor; // Assuming there is only one face in the captured image
                 updateResult();
-
+                defaultMsgElement.innerHTML = '✅';
             } else {
-                console.log(document.getElementById('result').textContent = `Not able to detect face in Image ${imageNumber}`);
+                resultElement.textContent = `Not able to detect face in Image ${imageNumber}`;
+                // defaultMsgElement.style.display = "hidden";
             }
         });
 }
