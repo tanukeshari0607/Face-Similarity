@@ -35,24 +35,22 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <video id="video" width="420" height="460" autoplay muted playsinline></video>
-        <canvas id="canvas"></canvas>
+     <div class="row">
+        <div class="col-md-6">
+            <video id="video" width="300" top="50px" autoplay muted playsinline></video>
+            <canvas id="canvas"></canvas>
+        </div>
+        <div class="col-md-6" style="margin-left: 350px;">
+            <div id="message"></div>
+            <button id="captureBtn1">Capture Image1</button>
+            <span id="defaultMsg1"></span>
+            <button id="captureBtn2">Capture Image2</button> 
+            <span id="defaultMsg2"></span>
+            <button id="flipCameraBtn">Flip Camera</button>
+            <br>
+            <div id="result"></div>
+        </div>
     </div>
-    
-    <div class="container" style="margin-left: 400px;">
-        <div id="message"></div>
-        <button id="captureBtn1">Capture Image1</button>
-        <span id="defaultMsg1"></span>
-         <!-- <input type="file" id="fileInput"/>  -->
-        <button id="captureBtn2">Capture Image2</button> 
-        <span id="defaultMsg2"></span>
-         <!-- <button id="uploadBtn">Upload Image</button>  -->
-        <button id="flipCameraBtn">Flip Camera</button>
-        <br>
-        <div id="result"></div>
-    </div>
-</div>
 </body>
 </html>
 
