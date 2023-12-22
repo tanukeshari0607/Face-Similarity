@@ -83,7 +83,7 @@ document.getElementById('captureBtn2').addEventListener('click', () => {
 let capturedDetails;
 let isFaceDetected = false;
 let descriptors = { desc1: null, desc2: null };
-const threshold = 0.4;
+const threshold = 0.6;
 let isLivenessDetected = false;
 let consecutiveFrames = 0;
 const maxConsecutiveFrames = 30;
