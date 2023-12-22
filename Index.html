@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <script defer src="face-api.min.js"></script>
-    <script defer src="script.js"></script>
+    <script defer src="/face-api.min.js"></script>
+    <script defer src="/script.js"></script>
     <style>
         body {
             margin: 0;
@@ -28,31 +28,44 @@
             color: blue;
         }
         #captureBtn1,#captureBtn2{
-            width:200px;
+            width:150px;
             height: 50px;
             border-radius: 5px;
+        }
+        #flipCameraBtn{
+            background-color:dimgray;
+            border-radius: 100px ;   
+            border:black;
+            width:70px;
+            height: 70px;
+            margin-left:40px;
+            margin-top:20px;
         }
     </style>
 </head>
 <body>
-     <div class="row">
-        <div class="col-md-6">
-            <video id="video" width="300" top="50px" autoplay muted playsinline></video>
-            <canvas id="canvas"></canvas>
-        </div>
-        <div class="col-md-6" style="margin-left: 350px;">
-            <div id="message"></div>
-            <button id="captureBtn1">Capture Image1</button>
-            <span id="defaultMsg1"></span>
-            <button id="captureBtn2">Capture Image2</button> 
-            <span id="defaultMsg2"></span>
-            <button id="flipCameraBtn">Flip Camera</button>
-            <br>
-            <div id="result"></div>
+    <div class="row">
+        <div class="container">
+            <div class="col-md-6">
+                <video id="video" width="300" height="300" autoplay muted playsinline></video>
+                <canvas id="canvas"></canvas>
+            </div>
+            
+            <div class="col-md-6" style="margin-left: 320px;">
+                <div id="message"></div>
+                <button id="captureBtn1">Capture Image1</button>
+                <span id="defaultMsg1"></span>
+                 <!-- <input type="file" id="fileInput"/>  -->
+                <button id="captureBtn2">Capture Image2</button> 
+                <span id="defaultMsg2"></span>
+                 <!-- <button id="uploadBtn">Upload Image</button>  -->
+                <button id="flipCameraBtn">Flip</button>
+                <br>
+                <div id="result"></div>
+            </div>
         </div>
     </div>
 </body>
-</html>
-
+</html> 
 
 
